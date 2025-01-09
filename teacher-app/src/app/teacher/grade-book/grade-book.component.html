@@ -1,0 +1,108 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+
+<div class="grade-book-container" *ngIf="!isLoading">
+  <h2>Grade Book</h2>
+
+  <div class="grade-table-container">
+    <table mat-table [dataSource]="students" class="grade-table">
+      <!-- Student Info Columns -->
+      <ng-container matColumnDef="student-header">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="2">
+          Student Information
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="submissions-header">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          [attr.colspan]="submissionsList.length"
+        >
+          Submissions
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="tests-header">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="testsList.length">
+          Tests
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="average-header">
+        <th mat-header-cell *matHeaderCellDef>Final</th>
+      </ng-container>
+
+      <!-- Base Columns -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let student">{{ student.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="enrollment_no">
+        <th mat-header-cell *matHeaderCellDef>Enrollment No</th>
+        <td mat-cell *matCellDef="let student">{{ student.enrollment_no }}</td>
+      </ng-container>
+
+      <!-- Dynamic Submission Columns -->
+      <ng-container
+        *ngFor="let sub of submissionsList"
+        [matColumnDef]="'sub_' + sub._id"
+      >
+        <th mat-header-cell *matHeaderCellDef>{{ sub.submission_name }}</th>
+        <td mat-cell *matCellDef="let student">
+          <span
+            [class]="
+              getGradeClass(findSubmissionGrade(sub.uploaded, student._id))
+            "
+          >
+            {{ findSubmissionGrade(sub.uploaded, student._id) }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Dynamic Test Columns -->
+      <ng-container
+        *ngFor="let test of testsList"
+        [matColumnDef]="'test_' + test._id"
+      >
+        <th mat-header-cell *matHeaderCellDef>{{ test.test_name }}</th>
+        <td mat-cell *matCellDef="let student">
+          <span
+            [class]="
+              getGradeClass(findTestGrade(test.test_responses, student._id))
+            "
+          >
+            {{ findTestGrade(test.test_responses, student._id) }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Average Column -->
+      <ng-container matColumnDef="average">
+        <th mat-header-cell *matHeaderCellDef>Average</th>
+        <td mat-cell *matCellDef="let student">
+          <span
+            class="average-grade"
+            [class]="getGradeClass(calculateAverage(student._id))"
+          >
+            {{ calculateAverage(student._id) }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Header Rows -->
+      <tr
+        mat-header-row
+        *matHeaderRowDef="[
+          'student-header',
+          'submissions-header',
+          'tests-header',
+          'average-header'
+        ]"
+        class="group-header-row"
+      ></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</div>

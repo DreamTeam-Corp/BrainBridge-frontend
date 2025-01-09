@@ -35,5 +35,6 @@ router.get(
   checkAuth,
   submissionControllers.getSubmissionClassid
 );
+router.put("/grade/:id", checkAuth, submissionControllers.gradeSubmission);
 
 module.exports = router;

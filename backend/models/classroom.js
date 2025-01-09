@@ -62,6 +62,16 @@ const classroomSchema = mongoose.Schema({
   tests: {
     type: [String],
   },
+  joinedStudents: {
+    type: [
+      {
+        studentId: String,
+        name: String,
+        enrollment_no: Number,
+        joinTime: Date,
+      },
+    ],
+  },
 });
 
 module.exports = mongoose.model("Classroom", classroomSchema);

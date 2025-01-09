@@ -36,7 +36,14 @@
           <p>Timing: {{ lecture.timing.time }}</p>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-raised-button color="primary">Join</button>
+          <button
+            mat-raised-button
+            color="primary"
+            [disabled]="isLectureJoined(lecture._id)"
+            (click)="onJoinLecture(lecture._id)"
+          >
+            {{ isLectureJoined(lecture._id) ? "Joined" : "Join" }}
+          </button>
         </mat-card-actions>
       </mat-card>
     </div>

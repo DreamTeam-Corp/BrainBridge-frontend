@@ -6,47 +6,282 @@ input[type="file"] {
 mat-spinner {
   margin: auto;
 }
+
+/* Основные стили */
 .list-main {
-  margin-top: 2%;
-  margin-left: 5%;
-  margin-right: 5%;
-  border: 1px solid;
+  margin: 2% auto;
+  max-width: 1000px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  padding: 20px;
 }
+
 .list-item {
-  margin: 1%;
-  padding: 1%;
-  background-color: white;
-  font-weight: 450;
+  margin: 15px 0;
+  padding: 15px;
+  background-color: #fafafa;
+  border-radius: 4px;
+  font-size: 15px;
+  color: #333;
+  animation: fadeIn 0.3s ease-in;
 }
+
 a {
   text-decoration: none;
   color: white;
 }
-.upload-table {
-  margin-top: 2%;
-  width: 100%;
-  text-align: center;
-}
 
+/* Стили для формы загрузки */
 .file-upload {
   display: flex;
   align-items: center;
-  margin-bottom: 1rem;
+  gap: 15px;
+  margin: 20px 0;
 }
 
 .file-name {
-  margin-left: 1rem;
   color: #666;
+  font-style: italic;
+  background: #f0f0f0;
+  padding: 8px 12px;
+  border-radius: 4px;
 }
 
 .button-container {
-  margin-top: 1rem;
+  margin: 20px 0;
+  text-align: center;
+}
+
+/* Стили для таблицы и кнопок с иконками */
+.upload-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+  background: white;
+  font-size: 14px;
+}
+
+.upload-table th,
+.upload-table td {
+  padding: 8px 10px;
+  text-align: left;
+  border: none;
+  vertical-align: middle;
+}
+
+.upload-table th {
+  background-color: #3f51b5;
+  color: white;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+.upload-table button {
+  min-width: 0;
+  padding: 4px 8px;
+  font-size: 12px;
+  line-height: 1;
+  height: 28px;
+}
+
+.upload-table tr:hover {
+  background-color: #f5f5f5;
+}
+
+.upload-table td {
+  padding: 12px;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.upload-table td:first-child {
+  width: 60%;
+  text-align: left;
+}
+
+.upload-table td:not(:first-child) {
+  width: 20%;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Стили для кнопок */
+button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+button[type="button"] {
+  border: 1px solid #3f51b5;
+  color: #3f51b5;
 }
 
 button[type="submit"] {
-  min-width: 120px;
+  min-width: 150px;
 }
 
-.file-upload button {
-  margin-right: 10px;
+/* Стили для мини-кнопок с иконками */
+button[mat-mini-fab] {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 4px;
+}
+
+button[mat-mini-fab] mat-icon {
+  font-size: 16px;
+  line-height: 16px;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Выравнивание иконок в кнопках */
+.upload-table td {
+  padding: 12px;
+  text-align: center;
+  width: auto;
+}
+
+.upload-table td:first-child {
+  text-align: left;
+  width: 60%;
+}
+
+.upload-table td:nth-child(2),
+.upload-table td:nth-child(3) {
+  width: 20%;
+}
+
+/* Контейнер для кнопок */
+.button-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Стили для информации об оценке */
+.grade-info {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+  border-left: 5px solid #3f51b5;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.grade-info h3 {
+  margin: 0 0 15px 0;
+  color: #2c3e50;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.grade-details {
+  margin-left: 15px;
+}
+
+.grade-details p {
+  margin: 10px 0;
+  color: #34495e;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.grade-details p.grade-value {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.grade-value.low {
+  background-color: #ffebee;
+  color: #d32f2f;
+}
+
+.grade-value.high {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.grade-details strong {
+  color: #2c3e50;
+  font-weight: 500;
+  margin-right: 8px;
+}
+
+/* Компактное время */
+.upload-time {
+  font-size: 12px;
+  color: #666;
+  white-space: nowrap;
+}
+
+.upload-time {
+  color: #666;
+  font-size: 13px;
+}
+
+/* Убираем лишние стили у кнопок */
+button[mat-mini-fab] a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Разделители */
+mat-divider {
+  margin: 10px 0;
+  opacity: 0.6;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .list-main {
+    margin: 2%;
+    padding: 15px;
+  }
+
+  .upload-table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .file-upload {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .file-name {
+    margin-top: 10px;
+  }
 }

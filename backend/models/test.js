@@ -35,8 +35,13 @@ const testSchema = mongoose.Schema({
         name: String,
         enrollment_no: Number,
         answers: [String],
-        marks: Number,
-        submit_time: Date,
+        marks: {
+          type: Number,
+        },
+        submit_time: {
+          type: Date,
+          default: Date.now,
+        },
       },
     ],
   },

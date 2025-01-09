@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
 import { TestModel } from './test.model';
-import { environment } from 'src/environments/environment';
+import { Test } from '../teacher/grade-book/grade-book.interfaces'; // добавляем этот импорт
+import { environment } from '../../environments/environment';
 
 const BACKEND_URL = environment.apiUrl + '/test/';
 
@@ -90,6 +90,11 @@ export class TestService {
   }
   getTestClassid(classId: string) {
     return this.http.get<{ message: string; test: TestModel[] }>(
+      BACKEND_URL + 'gettestids/' + classId
+    );
+  }
+  getTests(classId: string) {
+    return this.http.get<{ message: string; test: TestModel[] }>( // используем TestModel вместо Test
       BACKEND_URL + 'gettestids/' + classId
     );
   }

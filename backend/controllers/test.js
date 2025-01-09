@@ -1,17 +1,23 @@
 const Test = require("../models/test");
 
 function findMarks(userAnswers, questions) {
-  let correctAnswers = [];
-  marks = 0;
-  for (let i = 0; i < questions.length; i++) {
-    correctAnswers.push(questions[i].answer);
-  }
-  for (let j = 0; j < userAnswers.length; j++) {
-    if (userAnswers[j] == correctAnswers[j]) {
-      marks += 1;
+  if (!userAnswers || !questions || questions.length === 0) return 0;
+
+  let correctCount = 0;
+  const totalQuestions = questions.length;
+
+  // Подсчитываем количество правильных ответов
+  for (let i = 0; i < totalQuestions; i++) {
+    if (userAnswers[i] === questions[i].answer) {
+      correctCount++;
     }
   }
-  return marks;
+
+  // Рассчитываем оценку по 10-балльной шкале
+  const score = (correctCount / totalQuestions) * 10;
+
+  // Округляем до одного знака после запятой
+  return Math.round(score * 10) / 10;
 }
 
 exports.createTest = (req, res, next) => {

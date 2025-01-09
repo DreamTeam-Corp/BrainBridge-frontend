@@ -814,3 +814,79 @@ exports.deleteClassroom = (req, res, next) => {
       });
     });
 };
+
+exports.joinLecture = (req, res, next) => {
+  let joinedStudents;
+  Classroom.findById(req.params.id)
+    .then((classroom) => {
+      if (!classroom) {
+        return res.status(404).json({ message: "Classroom not found" });
+      }
+
+      if (!classroom.joinedStudents) {
+        joinedStudents = [];
+      } else {
+        joinedStudents = classroom.joinedStudents;
+      }
+
+      // Проверяем, не присоединился ли студент уже
+      const studentExists = joinedStudents.find(
+        (student) => student.studentId === req.body.studentId
+      );
+
+      if (studentExists) {
+        return res.status(400).json({ message: "Already joined" });
+      }
+
+      joinedStudents.push({
+        studentId: req.body.studentId,
+        name: req.body.name,
+        enrollment_no: req.body.enrollment_no,
+        joinTime: new Date(),
+      });
+
+      // Обновляем classroom и отправляем уведомление преподавателю
+      return Classroom.updateOne(
+        { _id: req.params.id },
+        { joinedStudents: joinedStudents }
+      );
+    })
+    .then((result) => {
+      if (result.n > 0) {
+        res.status(200).json({
+          message: "Joined lecture successfully",
+        });
+      } else {
+        res.status(401).json({
+          message: "Not authorized",
+        });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: "Joining lecture failed",
+        error: error,
+      });
+    });
+};
+
+exports.checkJoinStatus = (req, res, next) => {
+  Classroom.findById(req.params.classId)
+    .then((classroom) => {
+      if (!classroom || !classroom.joinedStudents) {
+        return res.status(200).json({ joined: false });
+      }
+
+      const joined = classroom.joinedStudents.some(
+        (student) => student.studentId === req.params.studentId
+      );
+
+      res.status(200).json({ joined });
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: "Checking join status failed",
+        error: error,
+      });
+    });
+};

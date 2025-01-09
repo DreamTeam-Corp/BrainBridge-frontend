@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, forkJoin } from 'rxjs';
 import { AuthModel } from './../../auth/auth.model';
 import { TestModel } from '../test.model';
 import { AuthService } from './../../auth/auth.service';
@@ -62,62 +62,62 @@ export class TestsComponent implements OnInit, OnDestroy {
   }
   getTests() {
     this.isLoading = true;
+    this.tests = [];
+    this.tests1 = [];
+
     if (this.userDataAll.subjects) {
-      this.userDataAll.subjects.forEach((data) => {
-        this.testService.getTestClassid(data).subscribe(
-          (response) => {
-            console.log(response.message);
+      const requests = this.userDataAll.subjects.map((data) =>
+        this.testService.getTestClassid(data)
+      );
+
+      forkJoin(requests).subscribe({
+        next: (responses) => {
+          responses.forEach((response) => {
             if (response.test.length) {
-              // console.log(response.test);
-              let testData = response.test;
-              let validTest = testData.map((data) => {
-                if (this.validShow(data.due_date)) {
-                  return data;
-                } else {
-                  return null;
-                }
+              const testData = response.test;
+
+              // Разделяем тесты на текущие и выполненные
+              const currentTests = testData.filter((test) => {
+                // Проверяем, есть ли ответ текущего пользователя в тесте
+                const userResponse = test.test_responses?.find(
+                  (response) => response.s_id === this.authService.getUserId()
+                );
+                // Тест считается текущим, если нет ответа пользователя и срок не истек
+                return !userResponse && this.validShow(test.due_date);
               });
-              let validTest1 = validTest.filter((data) => {
-                return data != null;
+
+              const pastTests = testData.filter((test) => {
+                // Проверяем, есть ли ответ текущего пользователя или истек срок
+                const userResponse = test.test_responses?.find(
+                  (response) => response.s_id === this.authService.getUserId()
+                );
+                return userResponse || !this.validShow(test.due_date);
               });
-              let invalidTest = testData.map((data) => {
-                if (!this.validShow(data.due_date)) {
-                  return data;
-                } else {
-                  return null;
-                }
-              });
-              let invalidTest1 = invalidTest.filter((data) => {
-                return data != null;
-              });
-              // console.log(validTest1);
-              // console.log(invalidTest1);
-              if (validTest1) {
-                // console.log('true');
-                this.tests.push(validTest1);
+
+              if (currentTests.length > 0) {
+                this.tests.push(currentTests);
               }
-              if (invalidTest1) {
-                this.tests1.push(invalidTest1);
+              if (pastTests.length > 0) {
+                this.tests1.push(pastTests);
               }
             }
-          },
-          (error) => {
-            console.log(error);
-            this.isLoading = false;
-          }
-        );
+          });
+          this.isLoading = false;
+        },
+        error: (error) => {
+          console.log(error);
+          this.isLoading = false;
+        },
       });
+    } else {
       this.isLoading = false;
     }
   }
   validShow(due_date: Date) {
     const now = new Date();
     const due = new Date(due_date);
-    if (now <= due) {
-      return true;
-    } else {
-      return false;
-    }
+    // Упрощаем сравнение и учитываем текущее время
+    return due > now;
   }
   ngOnDestroy() {
     this.authStatusSub.unsubscribe();

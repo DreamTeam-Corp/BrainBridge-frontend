@@ -1,0 +1,45 @@
+<div class="grade-dialog">
+  <h2 mat-dialog-title>Grade Submission</h2>
+
+  <mat-dialog-content>
+    <div class="grade-section">
+      <h3>Select Grade:</h3>
+      <div class="grade-buttons">
+        <button
+          mat-raised-button
+          *ngFor="let grade of grades"
+          [ngClass]="{ selected: selectedGrade === grade }"
+          [color]="selectedGrade === grade ? 'primary' : 'basic'"
+          (click)="selectedGrade = grade"
+        >
+          {{ grade }}
+        </button>
+      </div>
+    </div>
+
+    <div class="comment-section">
+      <h3>Add Comment:</h3>
+      <mat-form-field appearance="fill">
+        <mat-label>Comment</mat-label>
+        <textarea
+          matInput
+          [(ngModel)]="comment"
+          placeholder="Add your comment here"
+          rows="4"
+        ></textarea>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="!selectedGrade"
+      (click)="onSubmit()"
+    >
+      Submit Grade
+    </button>
+  </mat-dialog-actions>
+</div>

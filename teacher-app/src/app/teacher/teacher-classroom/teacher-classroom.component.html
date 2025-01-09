@@ -42,6 +42,13 @@
     >
       Show Tests
     </button>
+    <button
+      mat-raised-button
+      color="primary"
+      [routerLink]="['/grade-book', classroom._id]"
+    >
+      Grade Book
+    </button>
   </div>
   <mat-divider></mat-divider>
   <div class="list-item">Subject Name: {{ classroom.subject_name }}</div>

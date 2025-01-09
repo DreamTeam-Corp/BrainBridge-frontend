@@ -28,3 +28,14 @@ a {
 mat-spinner {
   margin: auto;
 }
+
+.grade-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.grade-buttons button {
+  flex: 0 0 calc(20% - 8px);
+}

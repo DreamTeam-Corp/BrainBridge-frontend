@@ -19,7 +19,6 @@ const routes: Routes = [
   {
     path: 'user-create',
     component: SignupComponent,
-    canActivate: [AuthGuard],
   },
   { path: '**', component: Page404notfoundComponent },
 ];

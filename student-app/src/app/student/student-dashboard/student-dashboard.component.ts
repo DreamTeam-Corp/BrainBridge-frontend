@@ -18,6 +18,7 @@ export class StudentDashboardComponent implements OnInit, OnDestroy {
   isLoading = false;
   private userDataAll: AuthModel;
   lectures: Array<any> = [];
+  joinedLectures: Set<string> = new Set(); // добавляем новое свойство
 
   constructor(
     private studentService: StudentService,
@@ -79,6 +80,15 @@ export class StudentDashboardComponent implements OnInit, OnDestroy {
       this.isLoading = false;
     }
   }
+
+  onJoinLecture(lectureId: string) {
+    this.joinedLectures.add(lectureId);
+  }
+
+  isLectureJoined(lectureId: string): boolean {
+    return this.joinedLectures.has(lectureId);
+  }
+
   ngOnDestroy() {
     // this.authStatusSub.unsubscribe();
   }

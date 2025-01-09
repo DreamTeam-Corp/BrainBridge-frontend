@@ -4,6 +4,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { LoginComponent } from './auth/login/login.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -22,6 +24,7 @@ import { SubmissionsComponent } from './submission/submissions/submissions.compo
 import { SubmissionUploadComponent } from './submission/submission-upload/submission-upload.component';
 import { TestsComponent } from './test/tests/tests.component';
 import { TestAttemptComponent } from './test/test-attempt/test-attempt.component';
+import { GradeFilterPipe } from './test/grade.pipe';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,7 @@ import { TestAttemptComponent } from './test/test-attempt/test-attempt.component
     SubmissionUploadComponent,
     TestsComponent,
     TestAttemptComponent,
+    GradeFilterPipe,
   ],
   imports: [
     BrowserModule,
@@ -48,6 +52,8 @@ import { TestAttemptComponent } from './test/test-attempt/test-attempt.component
     AngularMaterialModule,
     HttpClientModule,
     CommonModule,
+    MatIconModule,
+    MatSnackBarModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

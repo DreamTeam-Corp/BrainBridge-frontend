@@ -132,31 +132,43 @@ export class TestAttemptComponent implements OnInit {
     });
   }
   validData(date) {
-    let test_date = new Date(date);
-
-    let now = new Date();
-    console.log(test_date);
-    console.log(now);
-
-    if (test_date > now) {
-      return true;
-    } else {
-      return false;
-    }
+    const testDate = new Date(date);
+    const now = new Date();
+    // Сравниваем даты, используя timestamp
+    return testDate.getTime() > now.getTime();
   }
   attemptTest(form: NgForm) {
+    this.isLoading = true;
+    this.answer = []; // Очищаем массив перед заполнением
+
     for (let i = 0; i < this.test.test_question.length; i++) {
       let q = 'q' + i;
       this.answer.push(form.value[q]);
     }
+
     let testData = {
       s_id: this.userId,
       name: this.userDataAll.name,
       enrollment_no: this.userDataAll.enrollment_no,
       answers: this.answer,
     };
-    this.testService.attempTest(this.testId, testData);
-    this.openSnackBar('Test Attempted Successfully!');
-    this.router.navigate(['/']);
+
+    this.testService.attempTest(this.testId, testData).subscribe({
+      next: (response) => {
+        this.openSnackBar('Test Attempted Successfully!');
+        // Добавляем задержку перед переходом, чтобы снэкбар успел показаться
+        setTimeout(() => {
+          this.router.navigate(['/tests']).then(() => {
+            // После перехода принудительно обновляем список тестов
+            window.location.reload();
+          });
+        }, 1500);
+      },
+      error: (error) => {
+        console.error(error);
+        this.isLoading = false;
+        this.openSnackBar('Error submitting test!');
+      },
+    });
   }
 }

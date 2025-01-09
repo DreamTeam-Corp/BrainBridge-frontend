@@ -40,40 +40,41 @@
   </div>
   <div class="list-item" *ngIf="checkSubmit()">
     Your Upload:
-    <table class="upload-table" border="1">
-      <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Enrollment No</th>
-          <th scope="col">File</th>
-          <th scope="col">Upload Time</th>
-          <th scope="col">Action</th>
-        </tr>
-      </thead>
+    <table class="upload-table">
       <tbody>
-        <tr scope="row">
-          <td>{{ ourData.name }}</td>
-          <td>{{ ourData.enrollment_no }}</td>
+        <tr>
           <td>
-            <button mat-raised-button color="primary">
-              <a [href]="ourData.file">Show</a>
+            <span class="upload-time">
+              {{ ourData.upload_time | date : "short" }}
+            </span>
+          </td>
+          <td class="button-actions">
+            <button mat-mini-fab color="primary">
+              <a [href]="ourData.file" target="_blank">
+                <mat-icon>visibility</mat-icon>
+              </a>
             </button>
-          </td>
-          <td>
-            {{ ourData.upload_time | date }}
-            {{ ourData.upload_time | slice : 11 : 16 }}
-          </td>
-          <td>
             <button
-              mat-raised-button
+              mat-mini-fab
               color="warn"
               (click)="deleteSubmission(ourData)"
             >
-              Delete
+              <mat-icon>delete</mat-icon>
             </button>
           </td>
         </tr>
       </tbody>
     </table>
+    <div class="grade-info" *ngIf="ourData.grade">
+      <h3>Grade Information</h3>
+      <div class="grade-details">
+        <p class="grade-value" [ngClass]="ourData.grade < 4 ? 'low' : 'high'">
+          <strong>Grade:</strong> {{ ourData.grade }}
+        </p>
+        <p *ngIf="ourData.comment">
+          <strong>Teacher's Comment:</strong> {{ ourData.comment }}
+        </p>
+      </div>
+    </div>
   </div>
 </div>

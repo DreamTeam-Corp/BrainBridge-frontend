@@ -1,0 +1,81 @@
+.grade-dialog {
+  padding: 20px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.grade-section, 
+.comment-section {
+  margin-bottom: 24px;
+}
+
+h2 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+h3 {
+  color: #666;
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.grade-buttons {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 кнопок в ряд */
+  grid-template-rows: repeat(2, 1fr); /* 2 ряда */
+  gap: 6px;
+  margin: 8px 0;
+  width: 100%;
+}
+
+.grade-buttons button {
+  min-width: 0;
+  width: 100%;
+  height: 32px;
+  padding: 0;
+  font-size: 12px;
+  line-height: 32px;
+  border-radius: 4px;
+  background: none;
+  border: 1px solid #3f51b5; /* синяя граница */
+  color: #3f51b5; /* синий цвет текста */
+  transition: all 0.2s ease;
+  box-shadow: none; /* убираем тень */
+}
+
+.grade-buttons button:hover {
+  background-color: rgba(63, 81, 181, 0.04); /* легкий синий фон при наведении */
+}
+
+.grade-buttons button.selected {
+  background-color: #3f51b5;
+  color: white; /* белый цвет текста при выборе */
+  border-color: #3f51b5;
+  transform: none;
+  box-shadow: none;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 16px;
+  margin-top: 24px;
+  border-top: 1px solid #eee;
+}
+
+button[mat-raised-button] {
+  min-width: 120px;
+}

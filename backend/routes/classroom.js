@@ -64,4 +64,11 @@ router.get("/all", classroomControllers.getAllClassrooms);
 // Добавляем маршрут для удаления классрума
 router.delete("/:id", classroomControllers.deleteClassroom);
 
+router.put("/joinlecture/:id", checkAuth, classroomControllers.joinLecture);
+router.get(
+  "/checkjoin/:classId/:studentId",
+  checkAuth,
+  classroomControllers.checkJoinStatus
+);
+
 module.exports = router;

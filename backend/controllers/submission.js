@@ -289,3 +289,50 @@ exports.getSubmissionClassid = (req, res, next) => {
       });
     });
 };
+
+exports.gradeSubmission = (req, res, next) => {
+  let submissionData;
+  Submission.findById(req.params.id)
+    .then((submission) => {
+      if (!submission) {
+        return res.status(400).json({
+          message: "Submission not found",
+        });
+      }
+      submissionData = submission.uploaded;
+      const index = submissionData.findIndex(
+        (data) => data.id === req.body.studentId
+      );
+
+      if (index > -1) {
+        submissionData[index].grade = req.body.grade;
+        submissionData[index].comment = req.body.comment;
+
+        return Submission.updateOne(
+          { _id: req.params.id },
+          { uploaded: submissionData }
+        );
+      } else {
+        return res.status(400).json({
+          message: "Student submission not found",
+        });
+      }
+    })
+    .then((result) => {
+      if (result.n > 0) {
+        res.status(200).json({
+          message: "Grade added successfully!",
+        });
+      } else {
+        res.status(401).json({
+          message: "Not authorized",
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        message: "Couldn't add grade",
+      });
+    });
+};

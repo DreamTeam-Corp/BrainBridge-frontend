@@ -102,4 +102,16 @@ export class SubmissionService {
       BACKEND_URL + 'getsubmissionids/' + classId
     );
   }
+  gradeSubmission(
+    subId: string,
+    studentId: string,
+    grade: number,
+    comment: string
+  ) {
+    return this.http.put<{ message: string }>(BACKEND_URL + 'grade/' + subId, {
+      studentId,
+      grade,
+      comment,
+    });
+  }
 }

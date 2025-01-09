@@ -23,18 +23,9 @@ export class TestService {
     );
   }
   attempTest(testId: string, testData: any) {
-    this.http
-      .put<{ message: string }>(
-        BACKEND_URL + 'adduserresponse/' + testId,
-        testData
-      )
-      .subscribe(
-        (response) => {
-          console.log(response.message);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+    return this.http.put<{ message: string }>(
+      BACKEND_URL + 'adduserresponse/' + testId,
+      testData
+    );
   }
 }

@@ -16,6 +16,7 @@ import { SubmissionShowComponent } from './submission/submission-show/submission
 import { TestCreateComponent } from './test/test-create/test-create.component';
 import { TestShowComponent } from './test/test-show/test-show.component';
 import { TestsComponent } from './test/tests/tests.component';
+import { GradeBookComponent } from './teacher/grade-book/grade-book.component';
 
 const routes: Routes = [
   { path: '', component: TeacherDashboardComponent, canActivate: [AuthGuard] },
@@ -88,6 +89,11 @@ const routes: Routes = [
   {
     path: 'tests/:classId',
     component: TestsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'grade-book/:classId',
+    component: GradeBookComponent,
     canActivate: [AuthGuard],
   },
   { path: '**', component: Page404notfoundComponent },

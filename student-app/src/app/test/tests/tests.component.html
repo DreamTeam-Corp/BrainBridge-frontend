@@ -47,6 +47,15 @@
             <mat-card-content>
               <p>Start Date: {{ subtest.start_date | date }}</p>
               <p>Due Date: {{ subtest.due_date | date }}</p>
+              <p *ngIf="subtest.test_responses">
+                Your Grade:
+                {{
+                  (
+                    subtest.test_responses
+                    | gradeFilter : authService.getUserId()
+                  )?.marks || "Not attempted"
+                }}
+              </p>
             </mat-card-content>
             <mat-card-actions>
               <button

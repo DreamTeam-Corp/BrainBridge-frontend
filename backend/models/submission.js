@@ -30,6 +30,8 @@ const submissionSchema = mongoose.Schema({
         enrollment_no: Number,
         file: String,
         upload_time: Date,
+        grade: Number,
+        comment: String,
       },
     ],
   },

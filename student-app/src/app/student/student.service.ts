@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 const BACKEND_URL = environment.apiUrl + '/classroom/';
 @Injectable({
@@ -40,57 +42,43 @@ export class StudentService {
     studentId: string;
     enrollment_no: number;
   }) {
-    this.http
+    return this.http
       .put<{ message: string; classId: string }>(
         BACKEND_URL + 'enrollstudent',
         enrollData
       )
-      .subscribe(
-        (response) => {
-          console.log(response.message);
-          let sData = { subject: response.classId };
-          this.http
+      .pipe(
+        tap((response) => {
+          const sData = { subject: response.classId };
+          return this.http
             .put<{ message: string }>(
               environment.apiUrl + '/user/addsubject/' + enrollData.studentId,
               sData
             )
-            .subscribe(
-              (responseA) => {
-                console.log(responseA.message);
-                return;
-              },
-              (error) => {
-                console.log(error);
-              }
-            );
-        },
-        (error) => {
-          console.log(error);
-        }
+            .subscribe();
+        })
       );
   }
   unenrollClassroom(
     classId: string,
     studentData: { name: string; _id: string; enrollment_no: number }
   ) {
-    this.http
+    return this.http
       .put<{ message: string; classId: string }>(
         BACKEND_URL + 'unenrollstudent/' + classId,
         studentData
       )
-      .subscribe((response) => {
-        console.log(response.message);
-        let sData = { subject: response.classId };
-        this.http
-          .put<{ message: string }>(
-            environment.apiUrl + '/user/clearsubject/' + studentData._id,
-            sData
-          )
-          .subscribe((responseA) => {
-            console.log(responseA.message);
-            return;
-          });
-      });
+      .pipe(
+        tap((response) => {
+          const sData = { subject: response.classId };
+          return this.http
+            .put<{ message: string }>(
+              environment.apiUrl + '/user/clearsubject/' + studentData._id,
+              sData
+            )
+            .subscribe();
+        })
+      );
   }
   unenrollAllClassrooms(userId: string) {
     this.http
@@ -102,5 +90,25 @@ export class StudentService {
         console.log(response.message);
         return;
       });
+  }
+
+  joinLecture(
+    classId: string,
+    studentData: {
+      studentId: string;
+      name: string;
+      enrollment_no: number;
+    }
+  ) {
+    return this.http.put<{ message: string }>(
+      BACKEND_URL + 'joinlecture/' + classId,
+      studentData
+    );
+  }
+
+  checkJoinStatus(classId: string, studentId: string) {
+    return this.http.get<{ joined: boolean }>(
+      BACKEND_URL + 'checkjoin/' + classId + '/' + studentId
+    );
   }
 }

@@ -4,6 +4,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +29,8 @@ import { SubmissionShowComponent } from './submission/submission-show/submission
 import { TestsComponent } from './test/tests/tests.component';
 import { TestShowComponent } from './test/test-show/test-show.component';
 import { TestCreateComponent } from './test/test-create/test-create.component';
+import { GradeDialogComponent } from './submission/grade-dialog/grade-dialog.component';
+import { GradeBookComponent } from './teacher/grade-book/grade-book.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +50,8 @@ import { TestCreateComponent } from './test/test-create/test-create.component';
     TestsComponent,
     TestShowComponent,
     TestCreateComponent,
+    GradeDialogComponent,
+    GradeBookComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,6 +62,9 @@ import { TestCreateComponent } from './test/test-create/test-create.component';
     AngularMaterialModule,
     HttpClientModule,
     CommonModule,
+    MatDialogModule,
+    MatTableModule,
+    MatTooltipModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
