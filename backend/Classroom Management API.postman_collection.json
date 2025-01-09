@@ -1,0 +1,289 @@
+{
+	"info": {
+		"_postman_id": "d70787ea-d53f-41e6-adc0-dae9c9c7e38b",
+		"name": "Classroom Management API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33612265",
+		"_collection_link": "https://dreamteam-corp.postman.co/workspace/d01ebdaf-ee8e-4299-b3ec-f29a24845b77/collection/33612265-d70787ea-d53f-41e6-adc0-dae9c9c7e38b?action=share&source=collection_link&creator=33612265"
+	},
+	"item": [
+		{
+			"name": "User Management",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Doe\",\n  \"utype\": \"Student\",\n  \"department\": \"Computer Science\",\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"password123\",\n  \"semester\": 5,\n  \"dateofjoining\": \"2023-01-01\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/user/create",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/user/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"oldpass\": \"password123\",\n  \"newpass\": \"newpassword123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/user/passwordChange",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"passwordChange"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Classroom Management",
+			"item": [
+				{
+					"name": "Create Classroom",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"subject_name\": \"Mathematics\",\n  \"subject_code\": 101,\n  \"department\": \"Computer Science\",\n  \"semester\": 5\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/classroom/create",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"classroom",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Classroom",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"subject_name\": \"Advanced Mathematics\",\n  \"subject_code\": 101,\n  \"department\": \"Computer Science\",\n  \"semester\": 5\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/classroom/update/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"classroom",
+								"update",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Faculty",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"classId\": \"classroom_id\",\n  \"assignId\": \"faculty_id\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/classroom/assignFaculty",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"classroom",
+								"assignFaculty"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Submission Management",
+			"item": [
+				{
+					"name": "Create Submission",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"submission_name\": \"Assignment 1\",\n  \"context\": \"Complete the assignment\",\n  \"start_date\": \"2023-10-01\",\n  \"due_date\": \"2023-10-10\",\n  \"classroom_name\": \"Mathematics\",\n  \"classroom_id\": \"classroom_id\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/submission/create",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"submission",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Submission",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/path/to/file.pdf"
+								},
+								{
+									"key": "name",
+									"value": "John Doe"
+								},
+								{
+									"key": "enrollment_no",
+									"value": "12345"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/submission/upload/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"submission",
+								"upload",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Test Management",
+			"item": [
+				{
+					"name": "Create Test",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"test_name\": \"Midterm Exam\",\n  \"start_date\": \"2023-11-01\",\n  \"due_date\": \"2023-11-02\",\n  \"classroom_name\": \"Mathematics\",\n  \"classroom_id\": \"classroom_id\",\n  \"test_question\": [\n    {\n      \"question\": \"What is 2+2?\",\n      \"options\": [\"1\", \"2\", \"3\", \"4\"],\n      \"answer\": \"4\"\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/test/create",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"test",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add User Response",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"s_id\": \"student_id\",\n  \"name\": \"John Doe\",\n  \"enrollment_no\": 12345,\n  \"answers\": [\"4\"]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/test/addUserResponse/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"test",
+								"addUserResponse",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000"
+		}
+	]
+}
