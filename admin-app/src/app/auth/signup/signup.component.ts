@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css'],
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, OnDestroy {
   departments = [
     'Computer Engineering',
     'Information Technology',
@@ -19,7 +20,7 @@ export class SignupComponent implements OnInit {
   semesters = [1, 2, 3, 4, 5, 6, 7, 8];
   form: FormGroup;
   isLoading = false;
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -46,11 +47,13 @@ export class SignupComponent implements OnInit {
   validAdmin() {
     return this.form.value.utype == 'Admin';
   }
-  onSaveData() {
+
+  onSignup() {
     if (this.form.invalid) {
       return;
     }
     this.isLoading = true;
+
     const authData = {
       name: this.form.value.name,
       utype: this.form.value.utype,
@@ -60,10 +63,43 @@ export class SignupComponent implements OnInit {
       semester: this.form.value.semester || null,
       dateofjoining: this.form.value.dateofjoining || null,
     };
-    console.log(authData);
 
-    this.authService.createUser(authData);
-    this.form.reset();
-    this.isLoading = false;
+    // Теперь этот метод вернет Observable и subscribe будет работать
+    this.authService.createUser(authData).subscribe(
+      (response) => {
+        this.isLoading = false;
+        this.router.navigate(['/'], { queryParams: { tab: '1' } });
+      },
+      (error) => {
+        this.isLoading = false;
+        console.log(error);
+      }
+    );
+  }
+
+  // Удаляем или комментируем метод onSaveData
+  // onSaveData() {
+  //   if (this.form.invalid) {
+  //     return;
+  //   }
+  //   this.isLoading = true;
+  //   const authData = {
+  //     name: this.form.value.name,
+  //     utype: this.form.value.utype,
+  //     department: this.form.value.department,
+  //     email: this.form.value.email,
+  //     password: this.form.value.password,
+  //     semester: this.form.value.semester || null,
+  //     dateofjoining: this.form.value.dateofjoining || null,
+  //   };
+  //   console.log(authData);
+
+  //   this.authService.createUser(authData);
+  //   this.form.reset();
+  //   this.isLoading = false;
+  // }
+
+  ngOnDestroy() {
+    // Add any necessary cleanup code here
   }
 }

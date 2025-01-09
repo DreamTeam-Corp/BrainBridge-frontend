@@ -37,17 +37,11 @@ export class AuthService {
     return this.authStatusListener.asObservable();
   }
   createUser(authData) {
-    this.http
-      .post<{ message: string }>(BACKEND_URL + 'signup', authData)
-      .subscribe(
-        (response) => {
-          console.log(response.message);
-          this.router.navigate(['user-create']);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+    // Изменяем метод, чтобы он возвращал Observable
+    return this.http.post<{ message: string }>(
+      environment.apiUrl + '/user/signup',
+      authData
+    );
   }
   login(authData) {
     this.http

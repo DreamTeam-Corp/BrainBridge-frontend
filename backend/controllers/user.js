@@ -645,3 +645,41 @@ exports.removeSubject = (req, res, next) => {
       });
     });
 };
+
+exports.getAllUsers = (req, res, next) => {
+  User.find()
+    .select("-password") // Исключаем пароль из результатов
+    .then((users) => {
+      res.status(200).json({
+        message: "Users fetched successfully!",
+        users: users,
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        message: "Fetching users failed!",
+      });
+    });
+};
+
+exports.deleteUser = (req, res, next) => {
+  User.deleteOne({ _id: req.params.id })
+    .then((result) => {
+      if (result.n > 0) {
+        res.status(200).json({
+          message: "User deleted successfully!",
+        });
+      } else {
+        res.status(401).json({
+          message: "Not authorized!",
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        message: "Deleting user failed!",
+      });
+    });
+};

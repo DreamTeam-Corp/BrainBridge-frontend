@@ -777,3 +777,40 @@ exports.clearTest = (req, res, next) => {
       });
     });
 };
+
+exports.getAllClassrooms = (req, res, next) => {
+  Classroom.find()
+    .then((classrooms) => {
+      res.status(200).json({
+        message: "Classrooms fetched successfully!",
+        classrooms: classrooms,
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        message: "Fetching classrooms failed!",
+      });
+    });
+};
+
+exports.deleteClassroom = (req, res, next) => {
+  Classroom.deleteOne({ _id: req.params.id })
+    .then((result) => {
+      if (result.n > 0) {
+        res.status(200).json({
+          message: "Classroom deleted successfully!",
+        });
+      } else {
+        res.status(401).json({
+          message: "Not authorized!",
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        message: "Deleting classroom failed!",
+      });
+    });
+};

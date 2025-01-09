@@ -58,4 +58,10 @@ router.put(
 router.put("/addtest/:id", checkAuth, classroomControllers.addTest);
 router.put("/cleartest/:id", checkAuth, classroomControllers.clearTest);
 
+// Добавляем новый маршрут для получения всех классрумов
+router.get("/all", classroomControllers.getAllClassrooms);
+
+// Добавляем маршрут для удаления классрума
+router.delete("/:id", classroomControllers.deleteClassroom);
+
 module.exports = router;

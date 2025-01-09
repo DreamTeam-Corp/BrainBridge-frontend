@@ -27,5 +27,7 @@ router.put("/changepassword", checkAuth, userControllers.passwordChange);
 router.put("/removesubject/:id", checkAuth, userControllers.removeSubject);
 router.post("/login", userControllers.userLogin);
 router.get("/getprofile", checkAuth, userControllers.getProfile);
+router.get("/all", userControllers.getAllUsers);
+router.delete("/:id", userControllers.deleteUser);
 
 module.exports = router;

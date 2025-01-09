@@ -1,0 +1,174 @@
+.admin-dashboard {
+  padding: 20px;
+}
+
+h1 {
+  color: #2196f3;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  margin: 50px 0;
+}
+
+.classrooms-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.classroom-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.classroom-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.mat-card-title {
+  color: #1976d2;
+  font-size: 1.2rem;
+}
+
+.mat-card-subtitle {
+  color: #666;
+}
+
+.mat-card-content {
+  padding: 16px 0;
+}
+
+.mat-card-content p {
+  margin: 8px 0;
+  color: #333;
+}
+
+.mat-card-actions {
+  padding: 8px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+button {
+  margin-left: 8px;
+}
+
+.users-container {
+  padding: 20px;
+  max-width: 100%;
+  margin: 0 auto;
+  display: block;
+}
+
+.user-list-item {
+  margin: 8px 0;
+  padding: 16px !important;
+  border-radius: 4px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  width: 100% !important;
+  height: auto !important;
+}
+
+.user-list-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.user-avatar {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e0e0e0;
+  margin-right: 16px !important;
+}
+
+.user-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: #1976d2;
+}
+
+.user-details {
+  color: #666;
+  font-size: 14px;
+}
+
+.user-joined {
+  color: #999;
+  font-size: 12px;
+}
+
+mat-list-item button {
+  opacity: 1 !important;
+}
+
+mat-list-item:hover button {
+  opacity: 1;
+}
+
+.delete-button {
+  margin-left: 16px;
+}
+
+mat-divider {
+  margin-top: 8px;
+}
+
+.user-card {
+  display: none;
+}
+
+.user-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.user-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e0e0e0;
+}
+
+.user-avatar mat-icon {
+  color: #757575;
+}
+
+mat-tab-group {
+  margin-top: 20px;
+}
+
+.mat-tab-label {
+  min-width: 120px;
+}
+
+.mat-list {
+  width: 100%;
+}

@@ -69,8 +69,15 @@ export class AdminClassroomComponent implements OnInit, OnDestroy {
       department: this.form.value.department,
       semester: this.form.value.semester,
     };
-    this.adminService.createClassroom(classData);
-    this.router.navigate(['/admin']);
+
+    this.adminService.createClassroom(classData).subscribe(
+      (response) => {
+        this.router.navigate(['/'], { queryParams: { tab: '0' } });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
   ngOnDestroy() {
     this.authStatusSub.unsubscribe();
