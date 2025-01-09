@@ -2,9 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { AuthModel } from 'src/app/auth/auth.model';
-import { AuthService } from 'src/app/auth/auth.service';
-import { ProfileService } from 'src/app/auth/profile.service';
+import { AuthModel } from '../../auth/auth.model';
+import { AuthService } from '../../auth/auth.service';
+import { ProfileService } from '../../auth/profile.service';
 import { TeacherService } from '../teacher.service';
 
 @Component({
@@ -101,17 +101,39 @@ export class TeacherClassroomSelectComponent implements OnInit, OnDestroy {
       classId: classId,
       assignId: this.userId,
     };
-    this.teacherService.assignFacultyClassroom(data);
-    this.getProfile();
-    this.getClassrooms(this.sem, this.dept);
+    this.teacherService.assignFacultyClassroom(data).subscribe(
+      ([responseAssign, responseUser]) => {
+        console.log(responseAssign.message);
+        console.log(responseUser.message);
+        this.getProfile();
+        this.getClassrooms(this.sem, this.dept);
+        this.isLoading = false;
+      },
+      (error) => {
+        console.log(error);
+        this.isLoading = false;
+      }
+    );
   }
   unassignYou(classId: string) {
     this.isLoading = true;
     const data = {
       classId: classId,
     };
-    this.teacherService.unassignFacultyClassroom(data, this.userId);
-    this.getClassrooms(this.sem, this.dept);
+    this.teacherService.unassignFacultyClassroom(data).subscribe(
+      ([responseUnassign, responseUser]) => {
+        // Изменено для обработки двух ответов
+        console.log(responseUnassign.message);
+        console.log(responseUser.message);
+        this.getProfile();
+        this.getClassrooms(this.sem, this.dept);
+        this.isLoading = false;
+      },
+      (error) => {
+        console.log(error);
+        this.isLoading = false;
+      }
+    );
   }
   ngOnDestroy() {
     this.authStatusSub.unsubscribe();

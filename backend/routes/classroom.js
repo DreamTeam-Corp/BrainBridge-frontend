@@ -8,7 +8,7 @@ const router = express.Router();
 router.post("/create", classroomControllers.createClassroom);
 router.put("/update/:id", checkAuth, classroomControllers.updateClassroom);
 router.put("/assignfaculty", classroomControllers.assignFaculty);
-router.put("/unassignfaculty", classroomControllers.unassignFaculty);
+router.put("/unassignfaculty", checkAuth, classroomControllers.unassignFaculty);
 router.put("/enrollstudent", checkAuth, classroomControllers.enrollStudent);
 router.put(
   "/unenrollstudent/:id",

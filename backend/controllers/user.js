@@ -609,3 +609,39 @@ exports.getProfile = (req, res, next) => {
       });
     });
 };
+
+exports.removeSubject = (req, res, next) => {
+  User.findById(req.params.id)
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({
+          message: "User not found",
+        });
+      }
+
+      const subjects = user.subjects || [];
+      const index = subjects.indexOf(req.body.subject);
+
+      if (index > -1) {
+        subjects.splice(index, 1);
+        return User.updateOne({ _id: req.params.id }, { subjects: subjects });
+      } else {
+        return res.status(400).json({
+          message: "Subject not found in user's subjects",
+        });
+      }
+    })
+    .then((result) => {
+      if (result.n > 0) {
+        res.status(200).json({
+          message: "Subject removed successfully",
+        });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: "Couldn't remove subject",
+        error: error,
+      });
+    });
+};

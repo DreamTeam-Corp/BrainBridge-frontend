@@ -27,7 +27,7 @@ export class SubmissionService {
     );
   }
   uploadSubmission(subData: FormData, subId: string) {
-    this.http
+    return this.http
       .put<{ message: string }>(
         BACKEND_URL + 'uploadsubmission/' + subId,
         subData
@@ -35,9 +35,13 @@ export class SubmissionService {
       .subscribe(
         (response) => {
           console.log(response.message);
+          // Можно добавить дополнительную логику успешной загрузки
         },
         (error) => {
-          console.log(error);
+          console.log('Error uploading file:', error);
+          if (error.error && error.error.message) {
+            console.log('Server error message:', error.error.message);
+          }
         }
       );
   }

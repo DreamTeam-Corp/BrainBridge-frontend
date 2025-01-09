@@ -26,6 +26,7 @@ export class SubmissionUploadComponent implements OnInit, OnDestroy {
   private userId: string;
   submission: SubmissionModel;
   ourData: any;
+  selectedFileName: string = null;
 
   constructor(
     private authService: AuthService,
@@ -60,6 +61,7 @@ export class SubmissionUploadComponent implements OnInit, OnDestroy {
         asyncValidators: [mimeType],
       }),
     });
+    this.getSubmission(); // Добавьте этот вызов
     this.isLoading = false;
   }
   getSubmission() {
@@ -129,13 +131,11 @@ export class SubmissionUploadComponent implements OnInit, OnDestroy {
   }
   onFilePicked(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
-    this.form.patchValue({ file: file });
-    this.form.get('file').updateValueAndValidity();
-    const reader = new FileReader();
-    // reader.onload = () => {
-    //   this.imagePreview = reader.result as string;
-    // };
-    reader.readAsDataURL(file);
+    if (file) {
+      this.selectedFileName = file.name;
+      this.form.patchValue({ file: file });
+      this.form.get('file').updateValueAndValidity();
+    }
   }
   uploadSubmission() {
     if (this.form.invalid) {

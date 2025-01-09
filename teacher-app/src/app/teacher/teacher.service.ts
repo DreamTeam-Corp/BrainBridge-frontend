@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
+import { forkJoin } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
 
 const BACKEND_URL = environment.apiUrl + '/classroom/';
 
@@ -8,7 +10,7 @@ const BACKEND_URL = environment.apiUrl + '/classroom/';
   providedIn: 'root',
 })
 export class TeacherService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   updateClassroom(
     classId: string,
@@ -26,40 +28,29 @@ export class TeacherService {
         return;
       });
   }
+
   assignFacultyClassroom(data: { classId: string; assignId: string }) {
-    this.http
-      .put<{ message: string }>(BACKEND_URL + 'assignfaculty', data)
-      .subscribe((response) => {
-        console.log(response.message);
-        let sData = { subject: data.classId };
-        this.http
-          .put<{ message: string }>(
-            environment.apiUrl + '/user/addsubject/' + data.assignId,
-            sData
-          )
-          .subscribe((responseA) => {
-            console.log(responseA.message);
-            return;
-          });
-      });
+    return forkJoin([
+      this.http.put<{ message: string }>(BACKEND_URL + 'assignfaculty', data),
+      this.http.put<{ message: string }>(
+        environment.apiUrl + '/user/addsubject/' + data.assignId,
+        { subject: data.classId }
+      ),
+    ]);
   }
-  unassignFacultyClassroom(data: { classId: string }, userId: string) {
-    this.http
-      .put<{ message: string }>(BACKEND_URL + 'unassignfaculty', data)
-      .subscribe((response) => {
-        console.log(response.message);
-        let sData = { subject: data.classId };
-        this.http
-          .put<{ message: string }>(
-            environment.apiUrl + '/user/clearsubject' + userId,
-            sData
-          )
-          .subscribe((responseA) => {
-            console.log(responseA.message);
-            return;
-          });
-      });
+
+  unassignFacultyClassroom(data: { classId: string }) {
+    return forkJoin([
+      this.http.put<{ message: string }>(BACKEND_URL + 'unassignfaculty', data),
+      this.http.put<{ message: string }>(
+        environment.apiUrl +
+          '/user/removesubject/' +
+          this.authService.getUserId(),
+        { subject: data.classId }
+      ),
+    ]);
   }
+
   addAttendance(
     subject_name: string,
     subject_code: number,
@@ -157,6 +148,13 @@ export class TeacherService {
   getLecture(classId: string) {
     return this.http.get<{ message: string; notification: any }>(
       BACKEND_URL + 'getlecture/' + classId
+    );
+  }
+
+  clearInvalidSubject(userId: string, subjectId: string) {
+    return this.http.put<{ message: string }>(
+      environment.apiUrl + '/user/clearsubject/' + userId,
+      { subject: subjectId }
     );
   }
 }

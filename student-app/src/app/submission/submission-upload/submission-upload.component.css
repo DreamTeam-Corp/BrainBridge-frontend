@@ -1,5 +1,6 @@
 input[type="file"] {
   visibility: hidden;
+  position: absolute;
 }
 
 mat-spinner {
@@ -25,4 +26,27 @@ a {
   margin-top: 2%;
   width: 100%;
   text-align: center;
+}
+
+.file-upload {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.file-name {
+  margin-left: 1rem;
+  color: #666;
+}
+
+.button-container {
+  margin-top: 1rem;
+}
+
+button[type="submit"] {
+  min-width: 120px;
+}
+
+.file-upload button {
+  margin-right: 10px;
 }

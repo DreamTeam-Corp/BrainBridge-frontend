@@ -24,6 +24,7 @@ router.put("/addsubject/:id", checkAuth, userControllers.addSubject);
 router.put("/clearsubject/:id", checkAuth, userControllers.clearSubject);
 router.put("/clearallsubject/:id", checkAuth, userControllers.clearAllSubject);
 router.put("/changepassword", checkAuth, userControllers.passwordChange);
+router.put("/removesubject/:id", checkAuth, userControllers.removeSubject);
 router.post("/login", userControllers.userLogin);
 router.get("/getprofile", checkAuth, userControllers.getProfile);
 

@@ -84,15 +84,7 @@ exports.assignFaculty = (req, res, next) => {
     });
 };
 exports.unassignFaculty = (req, res, next) => {
-  Classroom.updateOne(
-    {
-      _id: req.body.classId,
-      faculty: req.userDataA.userId,
-    },
-    {
-      faculty: null,
-    }
-  )
+  Classroom.updateOne({ _id: req.body.classId }, { $unset: { faculty: "" } })
     .then((result) => {
       if (result.n > 0) {
         res.status(200).json({
@@ -554,10 +546,16 @@ exports.getLecture = (req, res, next) => {
 exports.getNotification = (req, res, next) => {
   Classroom.findById(req.params.id)
     .then((classroom) => {
+      if (!classroom) {
+        return res.status(404).json({
+          message: "Classroom not found",
+        });
+      }
+
       res.status(200).json({
         message: "Notification fetched Successfully!",
         subject_name: classroom.subject_name,
-        notification: classroom.notifications,
+        notification: classroom.notifications || [], // Добавляем значение по умолчанию
         faculty: classroom.faculty,
       });
     })
@@ -565,6 +563,7 @@ exports.getNotification = (req, res, next) => {
       console.log(error);
       return res.status(500).json({
         message: "Couldn't fetch Notification",
+        error: error,
       });
     });
 };

@@ -1,4 +1,12 @@
 const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
+
+// Создаем директорию если она не существует
+const dir = "backend/pdfs";
+if (!fs.existsSync(dir)) {
+  fs.mkdirSync(dir, { recursive: true });
+}
 
 const MIME_TYPE_MAP = {
   "application/pdf": "pdf",
@@ -7,12 +15,11 @@ const MIME_TYPE_MAP = {
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const isValid = MIME_TYPE_MAP[file.mimetype];
-    let error = new Error("Invalid mimetype");
+    let error = new Error("Invalid mime type");
     if (isValid) {
       error = null;
     }
-
-    cb(error, "pdfs"); // the Route should be relative to server.js file
+    cb(error, dir);
   },
   filename: (req, file, cb) => {
     const name = file.originalname.toLowerCase().split(" ").join("-");

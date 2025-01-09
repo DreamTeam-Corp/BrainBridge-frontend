@@ -74,23 +74,31 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
   getNotifications() {
     this.isLoading = true;
-    if (this.userDataAll.subjects) {
+    if (this.userDataAll && this.userDataAll.subjects) {
       this.userDataAll.subjects.forEach((subject) => {
         this.teacherService.getNotification(subject).subscribe(
           (response) => {
-            console.log(response.message);
-            if (response.notification.length) {
-              this.notifications.push({
-                subName: response.subject_name,
-                notifi: response.notification,
-                faculty: response.faculty,
-                classId: subject,
-              });
+            // Добавляем проверку на существование notification
+            if (response.notification) {
+              console.log(response.message);
+              if (response.notification.length) {
+                this.notifications.push({
+                  subName: response.subject_name,
+                  notifi: response.notification,
+                  faculty: response.faculty,
+                  classId: subject,
+                });
+              }
             }
           },
           (error) => {
-            console.log(error);
-            this.isLoading = false;
+            if (error.status === 404) {
+              // Обработка случая, когда classroom не найден
+              console.log('Classroom not found');
+            } else {
+              console.log('Error fetching notifications:', error);
+              this.isLoading = false;
+            }
           }
         );
       });
