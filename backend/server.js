@@ -41,7 +41,7 @@ const onError = (error) => {
 const port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
 
-const uri = "mongodb://127.0.0.1:27017/education";
+const uri = "mongodb://mongo:27017/education";
 const client = new MongoClient(uri, { useUnifiedTopology: true });
 
 client.connect((err) => {

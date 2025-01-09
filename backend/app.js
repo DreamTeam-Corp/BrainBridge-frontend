@@ -13,7 +13,7 @@ const app = express();
 
 // Database Connections
 mongoose
-  .connect("mongodb://127.0.0.1:27017/education-project", {
+  .connect("mongodb://mongo:27017/education-project", {
     useNewUrlParser: true,
   })
   .then(() => {
