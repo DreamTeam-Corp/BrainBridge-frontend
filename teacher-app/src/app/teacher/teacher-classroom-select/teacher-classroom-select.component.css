@@ -17,9 +17,116 @@ mat-form-field {
 
 .form-card {
   padding: 5%;
-  margin: 5%;
+  margin: 0;
 }
 .info-text {
   text-align: center;
   font-weight: 450;
+}
+
+.department-stats {
+  margin: 0;
+}
+
+.department-stats mat-card-title {
+  padding: 16px;
+  font-size: 1.2em;
+}
+
+.department-stats mat-list-item {
+  margin: 8px 0;
+}
+
+mat-divider {
+  margin: 8px 0;
+}
+
+.modules-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+  gap: 20px;
+}
+
+.stats-module {
+  flex: 1;
+  max-width: 50%;
+}
+
+.form-module {
+  flex: 1;
+  max-width: 50%;
+}
+
+@media (max-width: 768px) {
+  .modules-container {
+    flex-direction: column;
+  }
+  
+  .stats-module,
+  .form-module {
+    max-width: 100%;
+  }
+}
+
+.semester-stats {
+  padding: 16px 0;
+}
+
+.semester-row {
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+  gap: 16px;
+}
+
+.semester-label {
+  min-width: 100px;
+  font-weight: 500;
+}
+
+mat-expansion-panel {
+  margin: 8px 0;
+}
+
+mat-expansion-panel-header {
+  height: 64px !important;
+}
+
+mat-panel-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 auto;
+}
+
+mat-panel-description {
+  color: #666;
+  flex: 0 0 150px; /* увеличиваем ширину */
+  margin-right: 16px; /* добавляем отступ справа */
+  justify-content: center; /* центрируем содержимое */
+  align-items: center;
+  text-align: center; /* центрируем текст */
+}
+
+/* добавляем медиа-запрос для адаптивности */
+@media (max-width: 960px) {
+  mat-panel-description {
+    flex: 0 0 120px; /* уменьшаем ширину на меньших экранах */
+    margin-right: 8px; /* уменьшаем отступ */
+    font-size: 14px; /* уменьшаем размер шрифта */
+  }
+}
+
+@media (max-width: 600px) {
+  mat-panel-description {
+    flex: 0 0 100px;
+    margin-right: 4px;
+    font-size: 12px;
+  }
+}
+
+mat-chip {
+  min-width: 80px;
+  justify-content: center;
 }

@@ -30,6 +30,11 @@ export class TeacherClassroomSelectComponent implements OnInit, OnDestroy {
     'Aeronotical Engineering',
   ];
   semesters = [1, 2, 3, 4, 5, 6, 7, 8];
+  departmentStats: {
+    department: string;
+    count: number;
+    semesterCounts: { [key: number]: number };
+  }[] = [];
 
   constructor(
     private authService: AuthService,
@@ -58,6 +63,7 @@ export class TeacherClassroomSelectComponent implements OnInit, OnDestroy {
       });
 
     this.isLoading = false;
+    this.getDepartmentStats();
   }
   getProfile() {
     this.isLoading = true;
@@ -132,6 +138,33 @@ export class TeacherClassroomSelectComponent implements OnInit, OnDestroy {
       (error) => {
         console.log(error);
         this.isLoading = false;
+      }
+    );
+  }
+  getDepartmentStats() {
+    this.teacherService.getClassroomsByDepartment().subscribe(
+      (response) => {
+        const stats = this.departments.map((dept) => {
+          const departmentClasses = response.classrooms.filter(
+            (c) => c.department === dept
+          );
+          const semesterCounts = {};
+          this.semesters.forEach((sem) => {
+            semesterCounts[sem] = departmentClasses.filter(
+              (c) => c.semester === sem
+            ).length;
+          });
+
+          return {
+            department: dept,
+            count: departmentClasses.length,
+            semesterCounts: semesterCounts,
+          };
+        });
+        this.departmentStats = stats;
+      },
+      (error) => {
+        console.log(error);
       }
     );
   }

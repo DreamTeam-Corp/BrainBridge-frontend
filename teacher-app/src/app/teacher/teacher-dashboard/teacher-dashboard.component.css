@@ -10,3 +10,23 @@ mat-spinner {
 .example-card button {
   margin-left: 37.5%;
 }
+
+.no-classes {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.no-classes p {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+mat-card-actions button {
+  margin: 0;
+}

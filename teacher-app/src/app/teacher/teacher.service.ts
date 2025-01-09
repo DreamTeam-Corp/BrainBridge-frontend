@@ -157,4 +157,10 @@ export class TeacherService {
       { subject: subjectId }
     );
   }
+
+  getClassroomsByDepartment() {
+    return this.http.get<{ message: string; classrooms: any[] }>(
+      BACKEND_URL + 'all'
+    );
+  }
 }

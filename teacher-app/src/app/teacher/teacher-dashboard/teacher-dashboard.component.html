@@ -1,6 +1,17 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
-<p *ngIf="!classrooms && !isLoading">What is this</p>
-<div class="container-fluid" *ngIf="classrooms && !isLoading">
+
+<div class="no-classes" *ngIf="classrooms.length === 0 && !isLoading">
+  <p>Please select a class to begin</p>
+  <button
+    mat-raised-button
+    color="primary"
+    [routerLink]="['/classroom-select']"
+  >
+    Select Classroom
+  </button>
+</div>
+
+<div class="container-fluid" *ngIf="classrooms.length > 0 && !isLoading">
   <div class="row">
     <div class="col-md-4" *ngFor="let classroom of classrooms">
       <mat-card class="example-card">
@@ -19,6 +30,14 @@
             [routerLink]="['/classroom', classroom._id]"
           >
             Operate
+          </button>
+          <button
+            mat-icon-button
+            color="warn"
+            (click)="unassignClassroom(classroom._id)"
+            matTooltip="Leave classroom"
+          >
+            <mat-icon>exit_to_app</mat-icon>
           </button>
         </mat-card-actions>
       </mat-card>

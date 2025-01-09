@@ -47,3 +47,12 @@ a {
 .notification-list {
   width: 100%;
 }
+
+.navbar {
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: #333;
+}

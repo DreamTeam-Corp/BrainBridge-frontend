@@ -15,7 +15,7 @@ export class TeacherDashboardComponent implements OnInit, OnDestroy {
   isLoading = false;
   private authStatusSub: Subscription;
   private userId: string;
-  classrooms: [any];
+  classrooms: any[] = []; // Change type definition here
 
   constructor(
     private authService: AuthService,
@@ -57,6 +57,22 @@ export class TeacherDashboardComponent implements OnInit, OnDestroy {
       }
     );
   }
+
+  unassignClassroom(classId: string) {
+    this.isLoading = true;
+    this.teacherService
+      .unassignFacultyClassroom({ classId: classId })
+      .subscribe(
+        () => {
+          this.getClassroom();
+        },
+        (error) => {
+          console.log(error);
+          this.isLoading = false;
+        }
+      );
+  }
+
   ngOnDestroy() {
     this.authStatusSub.unsubscribe();
   }
